@@ -14,8 +14,6 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
-  
-// Endpoint om alle minifigs op te halen
 app.get('/minifigs', async (req, res) => {
   const { data, error } = await supabase.from('minifigs').select('*');
 
@@ -26,9 +24,9 @@ app.get('/minifigs', async (req, res) => {
   res.json(data);
 });
 
-app.use(express.json()); // nodig om JSON body te lezen
+app.use(express.json()); 
 
-// data naar minifigs table te sturen 
+
 app.post('/minifigs', async (req, res) => {
   const { name, rarity, img, auth } = req.body;
 
@@ -46,9 +44,6 @@ app.post('/minifigs', async (req, res) => {
 
   res.status(201).json({ success: true, data });
 });
-
-
-
 
 app.listen(port, () => {
   console.log(`API runnning on`);
