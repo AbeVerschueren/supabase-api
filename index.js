@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
 
 dotenv.config();
+app.use(express.static('public'));
 
 const app = express();
 const port = process.env.PORT || 3000;
