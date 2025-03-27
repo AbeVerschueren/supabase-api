@@ -3,32 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <title>Voeg een Minifig toe</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-  <h1>Voeg een Minifig toe</h1>
-  <form id="figForm">
-    <label>
-      Naam:<br>
-      <input type="text" name="name" required>
-    </label><br><br>
 
-    <label>
-      Rarity:<br>
-      <input type="text" name="rarity" required>
-    </label><br><br>
+  <header>
+    <h1>lego-api</h1>
+  </header>
+  <main>
+    <form id="figForm">
+      <h2>minifig</h2>
+      <label>
+        <span>Naam: text</span><br>
+        <input type="text" name="name" required>
+      </label><br><br>
 
-    <label>
-      Afbeelding URL:<br>
-      <input type="url" name="img" required>
-    </label><br><br>
+      <div id="wrapper">
+        <label class="checkbox"><input class="check" type="radio" name="rarity" value="Gewoon"><span class="rty gewoon" id="gewoon ">Gewoon</span></label><br>
+        <label class="checkbox"><input class="check" type="radio" name="rarity" value="Episch"> <span class="rty episch" id="Episch ">Episch</span></label><br>
+        <label class="checkbox"><input class="check" type="radio" name="rarity" value="Legendarisch"> <span class="rty legend" id="Legendarisch">Legendarisch</span></label>
+      </div>
+  
 
-    <label>
-      Wachtwoord:<br>
-      <input type="password" name="auth" required>
-    </label><br><br>
+  
+      <label>
+        <span>Afbeelding URL: raw=ja</span><br>
+        <input type="url" name="img" required>
+      </label><br><br>
+  
+      <label>
+        <span>Wachtwoord:</span><br>
+        <input type="password" name="auth" required>
+      </label><br><br>
+  
+      <button type="submit">Toevoegen</button>
+    </form>
+    <form id="setForm">
+      <label>
+        Naam:<br>
+        <input type="text" name="name" required>
+      </label><br><br>
+  
+      <label>
+        Rarity:<br>
+        <input type="text" name="rarity" required>
+      </label><br><br>
+  
+      <label>
+        Afbeelding URL:<br>
+        <input type="url" name="img" required>
+      </label><br><br>
+  
+      <label>
+        Wachtwoord:<br>
+        <input type="password" name="auth" required>
+      </label><br><br>
+  
+      <button type="submit">Toevoegen</button>
+    </form>
+    <form id="themeForm">
+      <label>
+        Naam:<br>
+        <input type="text" name="name" required>
+      </label><br><br>
+  
+      <label>
+        Rarity:<br>
+        <input type="text" name="rarity" required>
+      </label><br><br>
+  
+      <label>
+        Afbeelding URL:<br>
+        <input type="url" name="img" required>
+      </label><br><br>
+  
+      <label>
+        Wachtwoord:<br>
+        <input type="password" name="auth" required>
+      </label><br><br>
+  
+      <button type="submit">Toevoegen</button>
+    </form>
 
-    <button type="submit">Toevoegen</button>
-  </form>
+  </main>
+
 
   <p id="status"></p>
 
@@ -40,6 +98,14 @@
       e.preventDefault();
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData.entries());
+
+          const rarityCheckbox = document.querySelector('input[name="rarity"]:checked');
+          if (rarityCheckbox) {
+            payload.rarity = rarityCheckbox.value;
+          } else {
+            status.textContent = 'Selecteer een rarity!';
+            return;
+          }
 
       const res = await fetch('https://supabase-api-q362.onrender.com/minifigs', {
         method: 'POST',
@@ -54,6 +120,7 @@
       if (res.ok) {
         status.textContent = ' Minifig toegevoegd!';
         form.reset();
+        document.querySelectorAll('input[name="rarity"]').forEach(cb => cb.checked = false);
       } else {
         status.textContent = 'Fout: ' + result.error;
       }

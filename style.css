@@ -1,0 +1,137 @@
+:root {
+    --primary-color: #252733;
+    --secondary--color: #EFC61A;
+    --tertiarty-color:  #2D2F3E;
+    --text-color: rgb(233, 232, 232);
+    --text-hover-color: #dadada;
+}
+
+
+
+body{
+    background-color: var(--secondary--color) ;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+header{
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25vw;
+    border-radius: 10px;
+}
+header h1{
+    border-bottom: solid 5px var(--secondary--color);
+}
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 50px;
+    margin-top: 25px;
+
+}
+h2{
+    margin-top: 0;
+}
+#figForm,#setForm,#themeForm{
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--primary-color);
+    height: 75vh;
+    width: 20vw;
+    border-radius: 10px;
+}
+label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+span{
+    background-color: var(--tertiarty-color);
+    border: solid 1px var(--secondary--color);
+    border-radius: 2px;
+    font-size: larger;
+    padding: 5px;
+}
+input{
+    border: solid 2px var(--tertiarty-color);
+    height: 25px;
+    width: 20vw;
+    border-radius: 5px;
+}
+button{
+    background-color: var(--secondary--color);
+    border: solid 1px var(--tertiarty-color);
+    border-radius: 2px;
+    font-size: larger;
+    padding: 5px;
+    color: var(--tertiarty-color);
+}
+
+#wrapper{
+    display: flex;
+    justify-content: center;
+    width: 10vw;
+    margin-bottom: 25px;
+}
+.checkbox{
+    display: flex;
+    flex-direction: row;
+
+}
+.check{
+    width: 15px;
+    border-radius: 200px;
+}
+
+ input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+
+input[type="radio"]:checked {
+    background-color: gold;
+    border-color: gold;
+  }
+
+.rty {
+
+    transform: skewX(-15deg);
+    border: 3px solid;
+    font-size: small;
+    padding: 5px;
+}
+
+.gewoon {
+    background-color: #006400;
+    border-color: #00b300;
+    color:#00b300;
+}
+
+.episch {
+    background-color: #800080;
+    border-color: #ff00ff;
+    color: #fd97fd;
+}
+
+.legend {
+    background-color: #b8860b;
+    border-color: gold;
+    color: gold;
+}
