@@ -69,7 +69,7 @@ app.post('/minifigs', async (req, res) => {
 
 
 app.post('/sets', async (req, res) => {
-  const { name, img, code, theme, auth } = req.body;
+  const { naam, img, code, theme, auth } = req.body;
 
   if (auth !== process.env.API_SECRET) {
     return res.status(401).json({ error: 'Niet geautoriseerd' });
@@ -77,9 +77,10 @@ app.post('/sets', async (req, res) => {
 
   const { data, error } = await supabase
     .from('sets')
-    .insert([{ name, img, code, theme: parseInt(theme) }]);
+    .insert([{ naam, img, code, theme: parseInt(theme) }]);
 
   if (error) {
+    console.error('Fout bij sets insert:', error);
     return res.status(500).json({ error: error.message });
   }
 
@@ -88,7 +89,7 @@ app.post('/sets', async (req, res) => {
 
 
 app.post('/theme', async (req, res) => {
-  const { name, img, auth } = req.body;
+  const { naam, img, auth } = req.body;
 
   if (auth !== process.env.API_SECRET) {
     return res.status(401).json({ error: 'Niet geautoriseerd' });
@@ -96,9 +97,10 @@ app.post('/theme', async (req, res) => {
 
   const { data, error } = await supabase
     .from('theme')
-    .insert([{ name, img }]);
+    .insert([{ naam, img }]);
 
   if (error) {
+    console.error('Fout bij theme insert:', error);
     return res.status(500).json({ error: error.message });
   }
 
