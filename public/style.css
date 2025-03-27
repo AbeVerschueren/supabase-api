@@ -15,7 +15,8 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 header{
     background-color: var(--primary-color);
@@ -25,7 +26,7 @@ header{
     width: 25vw;
     border-radius: 10px;
 }
-header h1{
+ h1{
     border-bottom: solid 5px var(--secondary--color);
 }
 main{
@@ -46,7 +47,7 @@ h2{
     align-items: center;
     flex-direction: column;
     background-color: var(--primary-color);
-    height: 75vh;
+    height: 120vh;
     width: 20vw;
     border-radius: 10px;
 }
@@ -76,6 +77,11 @@ button{
     font-size: larger;
     padding: 5px;
     color: var(--tertiarty-color);
+}
+button:hover{
+    cursor: pointer;
+    scale: 1.1;
+    background-color: #f0da85;
 }
 
 #wrapper{
@@ -135,3 +141,56 @@ input[type="radio"]:checked {
     border-color: gold;
     color: gold;
 }
+
+
+.theme-select {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    border: none !important;
+  }
+  
+  .theme-btn {
+    background-color: var(--tertiarty-color);
+    color: var(--text-color);
+    border: 2px solid transparent;
+    padding: 8px 5px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .theme-btn:hover {
+    border-color: var(--secondary--color);
+    color: var(--secondary--color);
+  }
+  
+  .theme-btn.selected {
+    border-color: var(--secondary--color);
+    background-color: var(--tertiarty-color);
+  }
+  button span{
+    border: none;
+  }
+
+  .status-message {
+    margin-top: 10px;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+  }
+  
+  .status-message.show {
+    opacity: 1;
+  }
+  
+  .status-success {
+    color: limegreen;
+  }
+  
+  .status-error {
+    color: red;
+  }

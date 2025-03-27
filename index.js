@@ -67,6 +67,44 @@ app.post('/minifigs', async (req, res) => {
   res.status(201).json({ success: true, data });
 });
 
+
+app.post('/sets', async (req, res) => {
+  const { name, img, code, theme, auth } = req.body;
+
+  if (auth !== process.env.API_SECRET) {
+    return res.status(401).json({ error: 'Niet geautoriseerd' });
+  }
+
+  const { data, error } = await supabase
+    .from('sets')
+    .insert([{ name, img, code, theme: parseInt(theme) }]);
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.status(201).json({ success: true, data });
+});
+
+
+app.post('/theme', async (req, res) => {
+  const { name, img, auth } = req.body;
+
+  if (auth !== process.env.API_SECRET) {
+    return res.status(401).json({ error: 'Niet geautoriseerd' });
+  }
+
+  const { data, error } = await supabase
+    .from('theme')
+    .insert([{ name, img }]);
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.status(201).json({ success: true, data });
+});
+
 app.listen(port, () => {
   console.log(`API runnning on`);
 });

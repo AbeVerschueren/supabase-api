@@ -6,13 +6,9 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-
-  <header>
-    <h1>lego-api</h1>
-  </header>
   <main>
     <form id="figForm">
-      <h2>minifig</h2>
+      <h1>fig toevoegen</h1>
       <label>
         <span>Naam: text</span><br>
         <input type="text" name="name" required>
@@ -23,9 +19,6 @@
         <label class="checkbox"><input class="check" type="radio" name="rarity" value="Episch"> <span class="rty episch" id="Episch ">Episch</span></label><br>
         <label class="checkbox"><input class="check" type="radio" name="rarity" value="Legendarisch"> <span class="rty legend" id="Legendarisch">Legendarisch</span></label>
       </div>
-  
-
-  
       <label>
         <span>Afbeelding URL: raw=ja</span><br>
         <input type="url" name="img" required>
@@ -38,59 +31,75 @@
   
       <button type="submit">Toevoegen</button>
     </form>
+
     <form id="setForm">
+      <h1>set toevoegen</h1>
       <label>
-        Naam:<br>
+        <span>Naam: text</span><br>
         <input type="text" name="name" required>
       </label><br><br>
-  
+    
       <label>
-        Rarity:<br>
-        <input type="text" name="rarity" required>
-      </label><br><br>
-  
-      <label>
-        Afbeelding URL:<br>
+        <span>Afbeelding URL: raw=ja</span><br>
         <input type="url" name="img" required>
       </label><br><br>
-  
       <label>
-        Wachtwoord:<br>
+        <span>Code:</span><br>
+        <input type="text" name="code" required>
+      </label><br><br>
+      <label><span>Theme: ID</span></label><br><br>
+      <div class="theme-select">
+        <button type="button" class="theme-btn" data-id="2"><span>DC</span></button>
+        <button type="button" class="theme-btn" data-id="1"><span>Marvel</span></button>
+        <button type="button" class="theme-btn" data-id="4"><span>Ninjago</span></button>
+        <button type="button" class="theme-btn" data-id="3"> <span>Star Wars</span></button>
+        <button type="button" class="theme-btn" data-id="5"> <span>City</span></button>
+      </div>
+    
+      <input type="hidden" name="theme" id="themeInput" required>
+
+      <label>
+         <span>Wachtwoord:</span><br>
         <input type="password" name="auth" required>
       </label><br><br>
   
       <button type="submit">Toevoegen</button>
     </form>
     <form id="themeForm">
+      <h1>Theme toevoegen</h1>
       <label>
-        Naam:<br>
+        <span>Naam:</span><br>
         <input type="text" name="name" required>
       </label><br><br>
-  
+    
       <label>
-        Rarity:<br>
-        <input type="text" name="rarity" required>
-      </label><br><br>
-  
-      <label>
-        Afbeelding URL:<br>
+        <span>Afbeelding URL:</span><br>
         <input type="url" name="img" required>
       </label><br><br>
-  
+    
       <label>
-        Wachtwoord:<br>
+        <span>Wachtwoord:</span><br>
         <input type="password" name="auth" required>
       </label><br><br>
-  
+    
       <button type="submit">Toevoegen</button>
-    </form>
-
+      <p id="themeStatus"></p>
   </main>
 
 
   <p id="status"></p>
 
   <script>
+    function showMessage(el, message, isSuccess = true) {
+      el.textContent = message;
+      el.style.opacity = '1';
+      el.style.transition = 'opacity 0.3s ease';
+      el.style.color = isSuccess ? 'limegreen' : 'red';
+
+      setTimeout(() => {
+        el.style.opacity = '0';
+      }, 3000);
+    }
     const form = document.getElementById('figForm');
     const status = document.getElementById('status');
 
@@ -117,14 +126,92 @@
 
       const result = await res.json();
 
-      if (res.ok) {
-        status.textContent = ' Minifig toegevoegd!';
+            if (res.ok) {
+        showMessage(status, 'Minifig toegevoegd!');
         form.reset();
         document.querySelectorAll('input[name="rarity"]').forEach(cb => cb.checked = false);
       } else {
-        status.textContent = 'Fout: ' + result.error;
+        showMessage(status, 'Fout: ' + result.error, false);
       }
     });
+
+    const themeButtons = document.querySelectorAll('.theme-btn');
+  const themeInput = document.getElementById('themeInput');
+
+  themeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+     
+      themeButtons.forEach(b => b.classList.remove('selected'));
+
+      btn.classList.add('selected');
+
+      themeInput.value = btn.dataset.id;
+    });
+  });
+
+  const setForm = document.getElementById('setForm');
+  const setStatus = document.getElementById('setStatus');
+
+  setForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(setForm);
+    const payload = Object.fromEntries(formData.entries());
+
+    if (!payload.theme) {
+      setStatus.textContent = 'Kies een theme!';
+      return;
+    }
+
+    const res = await fetch('https://supabase-api-q362.onrender.com/sets', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+
+        if (res.ok) {
+      showMessage(setStatus, 'Set toegevoegd!');
+      setForm.reset();
+      themeButtons.forEach(b => b.classList.remove('selected'));
+    } else {
+      showMessage(setStatus, 'Fout: ' + result.error, false);
+    }
+
+  });
+
+
+
+  const themeForm = document.getElementById('themeForm');
+const themeStatus = document.getElementById('themeStatus');
+
+themeForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(themeForm);
+  const payload = Object.fromEntries(formData.entries());
+
+  const res = await fetch('https://supabase-api-q362.onrender.com/theme', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const result = await res.json();
+
+      if (res.ok) {
+      showMessage(themeStatus, 'Theme toegevoegd!');
+      themeForm.reset();
+    } else {
+      showMessage(themeStatus, ' Fout: ' + result.error, false);
+    }
+
+});
   </script>
 </body>
 </html>
