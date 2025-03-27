@@ -27,5 +27,5 @@ app.get('/minifigs', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`API running on http://localhost:${port}`);
+  console.log(`API runnning on http://localhost:${port}`);
 });
