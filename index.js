@@ -26,6 +26,28 @@ app.get('/minifigs', async (req, res) => {
 
 app.use(express.json()); 
 
+// endpoint sets
+app.get('/sets', async (req, res) => {
+  const { data, error } = await supabase.from('sets').select('*');
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json(data);
+});
+
+// endpoint theme
+app.get('/theme', async (req, res) => {
+  const { data, error } = await supabase.from('theme').select('*');
+
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.json(data);
+});
+
 
 app.post('/minifigs', async (req, res) => {
   const { name, rarity, img, auth } = req.body;
