@@ -11,9 +11,7 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
-app.get('/', (req, res) => {
-    res.send('Supabase API is live');
-  });
+
   
 // Endpoint om alle minifigs op te halen
 app.get('/minifigs', async (req, res) => {
