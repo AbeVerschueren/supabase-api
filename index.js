@@ -71,6 +71,8 @@ app.post('/minifigs', async (req, res) => {
 app.post('/sets', async (req, res) => {
   const { naam, img, code, theme, auth } = req.body;
 
+  console.log('Ontvangen data:', { naam, img, code, theme, auth });
+
   if (auth !== process.env.API_SECRET) {
     return res.status(401).json({ error: 'Niet geautoriseerd' });
   }
@@ -80,12 +82,13 @@ app.post('/sets', async (req, res) => {
     .insert([{ naam, img, code, theme: parseInt(theme) }]);
 
   if (error) {
-    console.error('Fout bij sets insert:', error);
+    console.error('Supabase fout:', error);
     return res.status(500).json({ error: error.message });
   }
 
   res.status(201).json({ success: true, data });
 });
+
 
 
 app.post('/theme', async (req, res) => {
